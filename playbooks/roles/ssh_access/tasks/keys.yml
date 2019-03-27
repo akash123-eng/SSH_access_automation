@@ -1,0 +1,7 @@
+- name: Add a new users
+  local_action: shell mkdir /tmp/{{ user_name }}/ && ssh-keygen -C {{ user_name }} -f /tmp/{{ user_name }}/{{ user_name }} -N ""
+#file:      path: /home/{{ user_name }}/      state: directory
+#command : ssh-keygen -C {{ user_name }} -f /home/{{ user_name }}/{{ user_name }}
+  tags:
+    - grant
+

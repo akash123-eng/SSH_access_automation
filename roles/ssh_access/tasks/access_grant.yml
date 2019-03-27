@@ -1,0 +1,20 @@
+- name: Add a new user
+  user:
+    name: "{{ user_name }}"
+    shell: /bin/bash
+  tags:
+     - add
+
+- name : Generate SSH keys
+  local_action :
+     command : ssh-keygen -C {{ user_name }} -F /home/{{ user_name }}/{{ user_name }}
+  tags:
+   - grant
+
+- name: Give SSH access
+  authorized_key:
+    user: "{{ user_name }}"
+    state: present
+    key: "{{ lookup('file', '/home/{{ user_name }}/{{ user_name }}') }}"
+  tags:
+   - grant
